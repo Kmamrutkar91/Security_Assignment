@@ -33,7 +33,7 @@ app.get('/customers/:age', verifyToken, (req, resp) => {
     const customer = customers.find(k => k.age === parseInt(req.params.age))
     jwt.verify(req.token, 'mysecretkey', (err) => {
         if (err) {
-            resp.status(404).send("Can not get customer by age")
+            resp.status(404).send("Unauthorized Access")
         }
         else {
             if (!customer) resp.status(404).send("Customer not found")
@@ -46,7 +46,7 @@ app.get('/findFirstName/:firstName', verifyToken, (req, resp) => {
     const customername = customers.find(k => k.firstName === (req.params.firstName))
     jwt.verify(req.token, 'mysecretkey', (err) => {
         if (err) {
-            resp.status(404).send("Can not get customer by name")
+            resp.status(404).send("Unauthorized Access")
         }
         else {
             if (!customername) resp.status(404).send("Customer not found")
@@ -62,7 +62,7 @@ app.post('/customers/addCustomer', verifyToken, (req, resp) => {
     }
     jwt.verify(req.token, 'mysecretkey', (err) => {
         if (err) {
-            resp.status(404).send("Can not add customer")
+            resp.status(404).send("Unauthorized Access")
         }
         else {
             customers.push(newCustomer)
@@ -75,7 +75,7 @@ app.put('/customers/:age', verifyToken, (req, resp) => {
     const customer = customers.find(k => k.age === parseInt(req.params.age))
     jwt.verify(req.token, 'mysecretkey', (err) => {
         if (err) {
-            resp.status(404).send("Can not Update customer")
+            resp.status(404).send("Unauthorized Access")
         }
         else {
             if (!customer) resp.status(404).send("Customer not found")
@@ -92,7 +92,7 @@ app.delete('/customers/:age', verifyToken, (req, resp) => {
     const customer = customers.find(k => k.age === parseInt(req.params.age))
     jwt.verify(req.token, 'mysecretkey', (err) => {
         if (err) {
-            resp.status(404).send("Can not delete customer")
+            resp.status(404).send("Unauthorized Access")
         }
         else {
             if (!customer) resp.status(404).send("Customer not found")
