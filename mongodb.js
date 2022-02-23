@@ -30,7 +30,7 @@ app.post('/products/login', (req, resp) => {
 app.get('/products/:id', verifyToken, (req, resp) => {
     jwt.verify(req.token, 'mysecretkey', (err) => {
         if (err) {
-            resp.status(404).send("Can not get product by id")
+            resp.status(404).send("Unauthorized Access")
         }
         else {
             database.collection('products').find({ id: parseInt(req.params.id) }).toArray((err, result) => {
@@ -44,7 +44,7 @@ app.get('/products/:id', verifyToken, (req, resp) => {
 app.post('/products/addProduct', verifyToken, (req, resp) => {
     jwt.verify(req.token, 'mysecretkey', (err) => {
         if (err) {
-            resp.status(404).send("Can not add product")
+            resp.status(404).send("Unauthorized Access")
         }
         else {
             let res = database.collection('products').find({}).sort({ id: -1 }).limit(1)
@@ -73,7 +73,7 @@ app.put('/products/:id', verifyToken, (req, resp) => {
     }
     jwt.verify(req.token, 'mysecretkey', (err) => {
         if (err) {
-            resp.status(404).send("Can not update product")
+            resp.status(404).send("Unauthorized Access")
         }
         else {
             let dataset = { $set: product }
@@ -90,7 +90,7 @@ app.put('/products/:id', verifyToken, (req, resp) => {
 app.delete('/products/:id', verifyToken, (req, resp) => {
     jwt.verify(req.token, 'mysecretkey', (err) => {
         if (err) {
-            resp.status(404).send("Can not delete product")
+            resp.status(404).send("Unauthorized Access")
         }
         else {
             database.collection('products').deleteOne({ id: parseInt(req.params.id) }, (err, result) => {
@@ -117,6 +117,6 @@ function verifyToken(req, resp, next) {
         next();
     }
     else {
-        resp.status(404).send("Wrong Token")
+        resp.status(404).send("Unauthorized Access")
     }
 }
