@@ -115,6 +115,6 @@ function verifyToken(req, resp, next) {
         next();
     }
     else {
-        resp.status(404).send("Wrong Token")
+        resp.status(404).send("Unauthorized Access")
     }
 }
